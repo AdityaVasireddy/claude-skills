@@ -19,8 +19,12 @@ present. The only thing worth building is the capture habit — so
 that's all this is.
 
 ## Example output
-See [`example/2026-07-05.md`](./example/2026-07-05.md) — a sample
-from a fictional project, showing the full template in use.
+Two files show both halves:
+- [`example/2026-07-05.md`](./example/2026-07-05.md) — a capture-mode
+  session record (fictional project, real template)
+- [`example/retrieval-example.md`](./example/retrieval-example.md) —
+  what asking your history a question looks like six months later,
+  including the retrieval log that decides the 60-day trial
 
 ## Status
 Running a 60-day personal trial with a pre-declared kill criterion:
