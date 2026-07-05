@@ -1,0 +1,29 @@
+# Engineering Historian
+
+Six months from now you won't remember why you abandoned an
+architecture, or the exact firewall command that fixed your Oracle
+deployment. Git doesn't record *why*. This does.
+
+## What it does
+One command at the end of a coding session — `/history` — and the
+agent writes a dated markdown record of that session: decisions made
+(with rejected alternatives and reasons), verified commands, problems
+solved, mistakes, open questions.
+
+No database. No embeddings. No dashboard. Just markdown + git.
+
+## Why
+Future models will get better at *reasoning* over your history for
+free, every year. What they can't do is retroactively capture the
+present. The only thing worth building is the capture habit — so
+that's all this is.
+
+## Example output
+See [`example/2026-07-05.md`](./example/2026-07-05.md) — a sample
+from a fictional project, showing the full template in use.
+
+## Status
+Running a 60-day personal trial with a pre-declared kill criterion:
+every retrieval gets logged with estimated minutes saved. If
+cumulative savings don't beat cumulative capture time by day 60, I
+delete this. Results posted either way.
