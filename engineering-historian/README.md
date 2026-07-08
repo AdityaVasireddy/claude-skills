@@ -23,7 +23,12 @@ something yourself, in the moment.
 
 No database. No embeddings. No dashboard. Just markdown + git.
 
-See [`INSTALL.md`](./INSTALL.md) for setup.
+One thing to know up front: the hook fires only when Claude Code
+**exits gracefully** (`/exit`, `/quit`, or `Ctrl+C`/`Ctrl+D`).
+Killing the terminal skips the exit routine and no sweep runs — the
+usual reason people think it's broken. Setup, the `jq` gotcha on
+native Windows, and platform-by-platform install are all in
+[`INSTALL.md`](./INSTALL.md).
 
 ## Why
 

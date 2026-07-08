@@ -22,7 +22,58 @@ engineering-historian/
 
 ## Requirements
 
-`jq`, `git`, and the `claude` CLI on PATH. Install `jq` with `brew install jq` (Mac) or `apt-get install jq` (Linux).
+`jq`, `git`, and the `claude` CLI. `git` and `claude` you already have if you're running Claude Code. `jq` is the one that trips people up, and *where* it needs to be depends on your platform — because on Windows the hook runs inside Git Bash, not PowerShell, and the two don't share a PATH. Pick your platform below.
+
+### Linux
+
+```bash
+sudo apt-get install jq      # Debian/Ubuntu
+sudo dnf install jq          # Fedora/RHEL
+```
+
+Package managers put `jq` on PATH; nothing else to do.
+
+### macOS
+
+```bash
+brew install jq
+```
+
+Homebrew puts `jq` on PATH; nothing else to do.
+
+### Windows + WSL
+
+If you run Claude Code *inside* a WSL distro, you're effectively on Linux — install `jq` **inside WSL** (`sudo apt-get install jq`), not on the Windows side. The hook runs in the WSL environment and picks it up from PATH. A `jq` installed on Windows proper is invisible to the WSL shell, and vice-versa.
+
+### Windows (native, no WSL)
+
+This is the fiddly one, and worth reading in full — a `jq` that works fine in PowerShell can still be invisible to the hook.
+
+**The trap:** Claude Code runs `.sh` hooks through **Git Bash**, in a *non-login, non-interactive* shell. That shell does **not** read your `~/.bashrc`, and it does **not** inherit PATH tweaks you made for PowerShell. So `jq` can be installed, resolve perfectly in `where.exe jq`, and the hook still can't find it — at which point the sweep fails silently and queues to `pending.log`, and the skill *looks* broken when it isn't.
+
+`winget install jqlang.jq` makes this worse in a specific way: it drops `jq.exe` under `%LOCALAPPDATA%\Microsoft\WinGet\Packages\...` but does **not** always create a shim in `WinGet\Links`, so `where.exe jq` / `Get-Command jq` come back **empty** even though winget reports the package as installed.
+
+**The durable fix** — put `jq.exe` where Git Bash always looks. `C:\Program Files\Git\bin` maps to Git Bash's `/usr/bin`, which is on PATH for *every* shell type including the non-login one the hook uses:
+
+1. Install jq (or confirm it's already there): `winget install jqlang.jq`
+2. Find the actual binary (winget nests it under a versioned folder):
+   ```powershell
+   Get-ChildItem -Path "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Recurse -Filter "jq*.exe" | Select-Object FullName
+   ```
+3. Copy it into Git's bin — **run PowerShell as Administrator** (`C:\Program Files` is protected):
+   ```powershell
+   Copy-Item "<PATH_FROM_STEP_2>" "C:\Program Files\Git\bin\jq.exe"
+   ```
+
+**Verify it the way that actually matters** — a **non-login** Git Bash shell, because that's how the hook invokes it:
+
+```powershell
+& "C:\Program Files\Git\bin\bash.exe" -c "command -v jq"
+```
+
+This must print a path. Note the missing `-l` flag: `command -v jq` succeeding *with* `-l` only proves a login shell can see it (via `.bashrc`), which the hook is not. Test without `-l`. If that prints a path, the hook will find jq.
+
+> **VS Code note:** if you launch Claude Code from a VS Code terminal, VS Code caches its environment at startup. After installing jq, fully **restart VS Code** (close every window so the parent process dies) — a new terminal in the old VS Code process still carries the stale PATH. The Git\bin copy above makes this moot, but it's why "it works in a fresh PowerShell but not in VS Code" happens.
 
 ## Step 1 — Place the files
 
@@ -62,6 +113,15 @@ Merge into `~/.claude/settings.json` (global) or `.claude/settings.json` (projec
 **Windows:** this exact JSON works unmodified. Claude Code automatically runs shell-form hook commands through Git Bash on Windows when Git for Windows is installed (which you need anyway, for `git`) — no explicit path to `bash.exe` required. If Claude Code ever fails to auto-detect it, point it explicitly via `~/.claude/settings.json`: `{ "env": { "CLAUDE_CODE_GIT_BASH_PATH": "C:\\Program Files\\Git\\bin\\bash.exe" } }`.
 
 Done. `SessionEnd` fires when a session closes; `PreCompact` is a safety net that saves the transcript's content before a long conversation gets compressed. `knowledge/capture-rules.md` (seeded from `assets/capture-rules.seed.md`) and the gitignored `knowledge/.sweep/` are created automatically per project on the first sweep — no per-project setup step.
+
+### End the session gracefully, or the hook won't fire
+
+`SessionEnd` only fires when Claude Code shuts down **gracefully** and gets to run its exit routine. End the session one of these ways:
+
+- `/exit` or `/quit` at the Claude Code prompt, or
+- `Ctrl+C` / `Ctrl+D` to exit the REPL cleanly.
+
+**Do not just kill the terminal** (the trash-can / "Kill Terminal" button in VS Code, or closing the window). That hard-terminates the process — the exit routine never runs, so no hook fires and no sweep happens. This is the single most common reason people think the skill is broken: they killed the terminal and nothing got captured. `PreCompact` still gives you a safety net mid-session for long conversations, but a deliberately-ended session must exit cleanly. (Exact exit commands can shift across Claude Code releases — if `/exit` isn't recognized, check `/help`.)
 
 ## Verify
 
