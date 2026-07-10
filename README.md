@@ -12,11 +12,25 @@ Captures a chronological, per-project engineering record — decisions made (and
 
 **v3 adds automatic capture.** v1/v2.5 relied on remembering to type `/history` at session end — the honest failure mode of any manual-trigger system. v3 replaces the trigger with a Claude Code hook that sweeps the session transcript automatically and drafts records (`status: auto`) for review; nothing else about the pipeline, formats, or promotion rules changed. See `engineering-historian/INSTALL.md` for setup. Currently in a 60-day usage trial — criteria pre-registered in `SKILL.md`, including new trigger-reliability and sweep-confirm-rate thresholds specific to v3.
 
+### [crucible](https://github.com/AdityaVasireddy/agent-skills/blob/main/crucible) — v1
+
+Adversarial idea validation *before* anything gets built. Five independent personas — Contrarian, Expansionist, Logician, Researcher, Buyer — attack the same brief from different angles without seeing each other's output, then a Judge resolves the tension into one **GO / RESHAPE / KILL** verdict. The most important output isn't the verdict; it's the cheapest 48-hour, near-zero-build test that tells you whether you're right without building anything.
+
+LLMs default to encouraging the person in front of them; Crucible is engineered to do the opposite. Veto floors stop a broken mechanism or a customer-won't-pay signal from being outvoted into a GO, and an anti-sycophancy check runs before the verdict lands. One markdown file, no dependencies.
+
 ### [five-gate-method](https://github.com/AdityaVasireddy/agent-skills/blob/main/five-gate-method) — v1
 
 Evidence-driven task discipline for hard tasks — anything where the first idea might be wrong. Five ordered gates, each with a binary pass condition: scope before work, evidence before reasoning, adversarial reasoning, verification at the layer of the claim, calibrated reporting. Plus a "smells" list that catches skipped gates mid-task ("you're on attempt three of the same fix" is easier to notice than "reason adversarially" is to remember).
 
 The premise: model intelligence is rented — pricing and availability change under you — but working *discipline* is behavioral, not stylistic, so it transfers to whatever model you run next. One markdown file, no scripts, no dependencies; if a runtime has no skill support at all, the body pastes into a rules file and works the same. Shipped for behavioral testing — the pre-declared check is in `five-gate-method/README.md`.
+
+## The through-line
+
+The three skills aren't a grab bag — they cover a project's lifecycle in order:
+
+- **crucible** — *should this be built at all?* (before work)
+- **five-gate-method** — *how do I reason while building it?* (during work)
+- **engineering-historian** — *what did the work teach me that's worth keeping?* (after work)
 
 More skills landing here over time.
 
@@ -26,7 +40,7 @@ Skills are plain folders — drop one into whatever skills directory your agent 
 
 **engineering-historian specifically** ships two extra pieces beyond the skill folder (a hook script and a sweep prompt) because Claude Code hooks are invoked by file path, not by skill content. See `engineering-historian/INSTALL.md` for the two-step setup.
 
-**For skills without an automation layer** (five-gate-method is one): copy the skill's folder into `.claude/skills/<name>/` in your project, or `~/.claude/skills/<name>/` globally. Other Agent Skills–compatible tools use their own convention — check that tool's docs.
+**For skills without an automation layer** (crucible and five-gate-method are both single-file): copy the skill's folder into `.claude/skills/<name>/` in your project, or `~/.claude/skills/<name>/` globally. Other Agent Skills–compatible tools use their own convention — check that tool's docs.
 
 ---
 
