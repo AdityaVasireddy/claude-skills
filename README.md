@@ -24,13 +24,20 @@ Evidence-driven task discipline for hard tasks — anything where the first idea
 
 The premise: model intelligence is rented — pricing and availability change under you — but working *discipline* is behavioral, not stylistic, so it transfers to whatever model you run next. One markdown file, no scripts, no dependencies; if a runtime has no skill support at all, the body pastes into a rules file and works the same. Shipped for behavioral testing — the pre-declared check is in `five-gate-method/README.md`.
 
+### [session-handoff](https://github.com/AdityaVasireddy/agent-skills/blob/main/session-handoff) — v1
+
+Produces a structured end-of-session handoff so you can `/clear` and start a fresh agent without losing continuity — the next agent picks up by reading one document. Required sections (objective, status, decisions + rationale, key files, next action) plus situational sections included only when they apply. The audience is a future instance of the model, so it captures intent and reasoning, not implementation — anything recoverable from the diff or the code in seconds is deliberately left out.
+
+The rules that make it trustworthy: a precision-claims rule (never state a path, number, or change you didn't observe this session), a self-consistency pass (sections describing the same system must agree before saving), and classification-by-manifestation for issues vs. risks vs. debt. One markdown file, no dependencies.
+
 ## The through-line
 
-The three skills aren't a grab bag — they cover a project's lifecycle in order:
+The skills aren't a grab bag — they cover a project's lifecycle in order:
 
 - **crucible** — *should this be built at all?* (before work)
 - **five-gate-method** — *how do I reason while building it?* (during work)
 - **engineering-historian** — *what did the work teach me that's worth keeping?* (after work)
+- **session-handoff** — *how do I preserve context for the next agent?* (across the context boundary)
 
 More skills landing here over time.
 
@@ -40,7 +47,7 @@ Skills are plain folders — drop one into whatever skills directory your agent 
 
 **engineering-historian specifically** ships two extra pieces beyond the skill folder (a hook script and a sweep prompt) because Claude Code hooks are invoked by file path, not by skill content. See `engineering-historian/INSTALL.md` for the two-step setup.
 
-**For skills without an automation layer** (crucible and five-gate-method are both single-file): copy the skill's folder into `.claude/skills/<name>/` in your project, or `~/.claude/skills/<name>/` globally. Other Agent Skills–compatible tools use their own convention — check that tool's docs.
+**For skills without an automation layer** (crucible, five-gate-method, and session-handoff are all single-file): copy the skill's folder into `.claude/skills/<name>/` in your project, or `~/.claude/skills/<name>/` globally. Other Agent Skills–compatible tools use their own convention — check that tool's docs.
 
 ---
 
