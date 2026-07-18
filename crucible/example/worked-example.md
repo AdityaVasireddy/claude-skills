@@ -96,14 +96,35 @@ retention vs. free.
 *(This run had no web search — so nothing below is VERIFIED, and the
 session says so.)*
 
-- `RECALL — confirm before acting:` medically-tailored-meal companies
-  that scaled did so through health-plan and Medicaid contracts, not
+**4a — Discovery** (does the capability exist?):
+- `RECALL — confirm before acting:` medically-tailored-meal (MTM)
+  companies and renal-specific meal services exist; the ones that
+  scaled did so through health-plan and Medicaid contracts, not
   direct-to-consumer subscriptions.
 - `RECALL — confirm before acting:` Medicare covers medical nutrition
   therapy for CKD when referred — a reimbursement path relevant to B2.
+
+**4b — Adequacy** (is the problem actually well solved?):
+**No evidence collected regarding adequacy** — nothing this session
+speaks to whether CKD patients are *satisfied* with existing MTM
+options; existence of competitors is not treated as evidence the
+problem is solved. What would show it's *not* solved despite
+competitors: renal-patient complaints about taste/cost/coverage,
+churn from DTC renal services, caregivers reverting to home cooking.
+None of that was collectable without search → "existing options
+serve this buyer poorly" enters the stack as `HOPE`.
 - `REASONED:` a caregiver cooking from the clinic's free sheet is a
   substitute with zero cost and an emotional moat; retention risk #6
   is real even if trial succeeds.
+
+**4c — Remaining wedge opportunities:** trust/vertical
+specialization (a credentialed renal dietitian with a warm patient
+list) — *hypothesis*, `BELIEVE`; payer-channel wedge (reimbursement
+instead of out-of-pocket) — *hypothesis* supported only by the
+`RECALL` scaling pattern above.
+
+**4d — Market state:** insufficient evidence to classify — no
+verified competitor set or adequacy data this session.
 
 No stack promotions this session — evidence added leads, not proof.
 

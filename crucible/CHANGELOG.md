@@ -5,6 +5,28 @@ All notable changes to Crucible are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versioning follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **Stage 4 (Evidence) methodology** refined into four explicit
+  passes — Discovery (existence), Adequacy, Remaining Wedge
+  Opportunities, and Market State — so "competitors exist" can never
+  be read as "the problem is solved." Existence answers only "does
+  this capability already exist?"; adequacy independently answers
+  "is the underlying problem actually well solved for this buyer?",
+  including the mandatory falsification question ("what evidence
+  would convince us this market is not solved despite existing
+  competitors?") and the required statement "No evidence collected
+  regarding adequacy" when the pass comes up empty (the adequacy
+  assumption then enters the stack as `HOPE`). Market state must be
+  classified as one of Sparse / Emerging / Crowded-but-Weak /
+  Crowded-with-Strong-Incumbents / Mature / Commodity with cited
+  evidence, or declared "insufficient evidence to classify." Evidence
+  tiers, stack tags, ledger schema, and all other stages are
+  unchanged; the worked example's Stage 4 was updated to show the new
+  passes.
+
 ## [2.0.0] — 2026-07-17
 
 Crucible v2 is a ground-up redesign. It replaces the v1 judging

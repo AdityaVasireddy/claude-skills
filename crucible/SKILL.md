@@ -107,6 +107,43 @@ claim:
 - `RECALL` — training memory; label it "confirm before acting."
 - `REASONED` — inference from stated facts.
 
+When competitors or substitutes surface, run four separate passes.
+Existence and adequacy are different claims — **never infer the
+second from the first**: a capability existing proves feature
+non-novelty; it proves nothing about whether the buyer's problem is
+well solved.
+
+**4a — Discovery.** Answer only Question A: "does this capability
+already exist?" — who offers it, at what price, through what
+channel. This answer is usually `VERIFIED`.
+
+**4b — Adequacy.** Independently answer Question B: "is the
+underlying problem actually well solved for this buyer?" Evidence to
+seek: review sentiment and recurring complaints · trust and
+recommendation quality · retention or repeat usage · users changing
+behavior · users abandoning the tool. Tier each finding like any
+other claim. Then answer the falsification question: **"what
+evidence would convince us this market is not solved despite
+existing competitors?"** — and check whether any of it already
+exists. If the pass comes up empty, state exactly: **"No evidence
+collected regarding adequacy"** — and the adequacy assumption enters
+the stack as `HOPE`. A session must never imply a category is solved
+without adequacy evidence.
+
+**4c — Remaining wedge opportunities.** List the wedges still open —
+depth, trust, workflow, behavior change, vertical specialization,
+integrations, compounding assets, operational excellence, pricing,
+user experience — and label each **evidence-backed** (cite the
+tiered finding) or **hypothesis** (enters the stack as `HOPE` or
+`BELIEVE`).
+
+**4d — Market state.** Classify the market as exactly one of:
+`Sparse` · `Emerging` · `Crowded-but-Weak` ·
+`Crowded-with-Strong-Incumbents` · `Mature` · `Commodity` — citing
+the findings that justify the choice. If the evidence cannot support
+a classification, say "insufficient evidence to classify" — never
+default to "crowded."
+
 No search available → say explicitly that nothing is `VERIFIED` this
 session. Apply promotions/demotions to the stack as evidence lands.
 
